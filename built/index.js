@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const app = new app_1.default({
     port: 8000,
+    middlewares: [],
     routers: []
 });
 app.listen();

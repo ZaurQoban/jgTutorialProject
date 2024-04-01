@@ -19,6 +19,20 @@ class App {
         this.app = new koa_1.default();
         this.port = appInit.port;
         this.initAssets();
+        this.initMiddlewares(appInit.middlewares);
+        this.initRoutes(appInit.routers);
+    }
+    ;
+    initMiddlewares(middlewares) {
+        middlewares.forEach((middleware) => {
+            this.app.use(middleware);
+        });
+    }
+    ;
+    initRoutes(routes) {
+        routes.forEach((route) => {
+            this.app.use(route.router.routes());
+        });
     }
     ;
     initAssets() {

@@ -1,10 +1,8 @@
-import Application from 'koa';
+import Application, { Middleware } from 'koa';
 import Koa from 'koa';
 import { IAppInit } from './interfaces/IAppInit.interface';
 import { IRouter } from './interfaces/IRouter.interface';
 import bodyParser from 'koa-bodyparser';
-
-
 
 
 class App {
@@ -15,8 +13,21 @@ class App {
         this.app = new Koa();
         this.port = appInit.port;
         this.initAssets();
+        this.initMiddlewares(appInit.middlewares);
+        this.initRoutes(appInit.routers);
     };
 
+    private initMiddlewares(middlewares:Middleware[]){
+        middlewares.forEach((middleware)=>{
+            this.app.use(middleware);
+        });
+    };
+
+    private initRoutes(routes:IRouter[]){
+        routes.forEach((route)=>{
+            this.app.use(route.router.routes());
+        });
+    };
 
     private initAssets(){
         this.app.use(bodyParser());
